@@ -1,0 +1,19 @@
+.header__learn-more {
+    /* margin: 0; */
+    margin-top: 146px;
+    max-width: 129px;
+    height: 36px;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    background-color: transparent;
+    color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.header__learn-more:hover {
+    opacity: 0.6;
+}

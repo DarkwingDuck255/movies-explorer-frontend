@@ -1,0 +1,13 @@
+.about-project__timeline-wrap {
+    display: flex;
+    flex-direction: column;
+    max-width: 228px;
+    width: 100%;
+    margin: 0;
+    justify-content: center;
+    text-align: center;
+}
+
+.about-project__timeline-wrap:last-of-type {
+    max-width: 912px;
+}

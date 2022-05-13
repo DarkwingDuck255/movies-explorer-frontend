@@ -1,0 +1,7 @@
+.header__nav_loggedin {
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    flex-direction: row;
+    align-items: center;
+}

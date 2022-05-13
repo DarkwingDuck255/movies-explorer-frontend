@@ -1,0 +1,11 @@
+.about-project__section-one {
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-bottom: 110px;
+}
+
+.about-project__section-one:last-child {
+    margin-right: 0px;
+}

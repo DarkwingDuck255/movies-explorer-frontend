@@ -1,0 +1,6 @@
+.about-me__portfolio {
+    display: flex;
+    flex-direction: column;
+    max-width: 1140px;
+    width: 100%;
+}

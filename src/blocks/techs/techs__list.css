@@ -1,0 +1,6 @@
+.techs__list {
+    max-width: 690px;
+    display: flex;
+    flex-direction: row;
+    margin: 100px auto 0 auto;
+}

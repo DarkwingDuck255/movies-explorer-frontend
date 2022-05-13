@@ -1,0 +1,11 @@
+.about-project {
+    max-width: 1140px;
+    width: 100%;
+    margin-top: 110px;
+    margin-bottom: 110px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}

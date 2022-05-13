@@ -1,0 +1,22 @@
+.movies-card-list__button-more {
+    margin-top: 50px;
+    max-width: 320px;
+    height: 32px;
+    width:100%;
+    border-radius: 4px;
+    cursor: pointer;
+    border-color: #E8E8E8;
+    border-style: solid;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 80px;
+    transition: 0.6s linear;
+}
+
+.movies-card-list__button-more:hover {
+    opacity: 0,6;
+    background-color: rgb(154, 195, 135);
+}

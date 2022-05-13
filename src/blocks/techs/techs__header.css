@@ -1,0 +1,15 @@
+.techs__header {
+    max-width: 1140px;
+    width: 100%;
+    padding-top: 100px;
+    text-align: left;
+    align-self: center;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    padding-bottom: 23px;
+    border-bottom: 1px #000 solid;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 90px;
+}

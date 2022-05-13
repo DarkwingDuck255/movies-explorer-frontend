@@ -1,0 +1,8 @@
+.header__description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:0;
+    margin-top: 75px;
+    margin-bottom: 25px;
+}

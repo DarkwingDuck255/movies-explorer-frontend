@@ -1,0 +1,8 @@
+.header__profile-avatar {
+    display: flex;
+    justify-content: center;
+    max-width: 10px;
+    /* max-height: 24px; */
+    /* border-radius: 50%; */
+    /* background-color: #F9F9F9; */
+}
