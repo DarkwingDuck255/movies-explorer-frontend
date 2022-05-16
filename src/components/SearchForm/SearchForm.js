@@ -7,9 +7,9 @@ function SearchForm() {
     return (
         <form className="seach-form">
             <div className="seach-form__container">
-                <input className="seach-form__imput" placeholder="Фильм" name="movie">
+                <input className="seach-form__imput" placeholder="Фильм" name="movie" required>
                 </input>
-                <input type='submit' className="seach-form__imput-submit" value=''/>
+                <input type='submit' className="seach-form__imput-submit common__link" value=''/>
             </div>
             <div className='seach-form__switch-wrap'>
                 <p className="seach-form__switch-description">Короткометражки</p>

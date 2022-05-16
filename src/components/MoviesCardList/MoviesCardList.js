@@ -6,8 +6,7 @@ import initialCards from '../../utils/constants';
 
 
 function MoviesCardList() {
-    //необходимо добавить кнопку удаления из избранного если текущий путь /saved-movies
-
+    
 
     return (
         <>

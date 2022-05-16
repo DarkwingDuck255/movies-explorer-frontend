@@ -1,6 +1,6 @@
 import './MoviesCard.css'
 import React from "react";
-import { useState } from 'react';
+// import { useState } from 'react';
 
 
 

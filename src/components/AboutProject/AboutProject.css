@@ -12,8 +12,8 @@
 }
 
 .about-project__timeline {
-    /* max-width: 1140px;
-    width: 100%; */
+    max-width: 1140px;
+    width: 100%;
     align-items: center;
     display:flex;
     /* flex-direction:; */
@@ -112,7 +112,7 @@
 }
 
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1200px) {
     .about-project {
         max-width: 668px;
         width: 100%;
@@ -128,11 +128,18 @@
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 700px) {
+    .about-project {
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 520px) {
     .about-project {
         max-width: 284px;
-        margin-right: 18px;
-        margin-left: 18px;
+        margin-right: auto;
+        margin-left: auto;
+
     }
 
     .about-project__description{
