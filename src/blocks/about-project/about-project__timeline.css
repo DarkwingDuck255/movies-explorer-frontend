@@ -1,0 +1,7 @@
+.about-project__timeline {
+    max-width: 1140px;
+    width: 100%;
+    /* align-items: center; */
+    display:flex;
+    /* flex-direction:; */
+}

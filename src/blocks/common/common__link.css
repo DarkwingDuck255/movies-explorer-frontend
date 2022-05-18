@@ -1,0 +1,12 @@
+.common__link {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    
+}
+
+.common__link:hover {
+    transition: 0.5s;
+    opacity: 0.6;
+    color: rgb(233, 142, 23);
+}

@@ -1,0 +1,12 @@
+.header__nav-link {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    margin-right: 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header__nav-link:first-of-type {
+    font-weight: 500;
+}

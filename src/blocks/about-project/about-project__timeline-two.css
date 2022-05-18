@@ -1,0 +1,14 @@
+.about-project__timeline-two {
+    max-width: 912px;
+    height: 36px;
+    width: 100%;
+    background-color:#F2F2F2;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+}

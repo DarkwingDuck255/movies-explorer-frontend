@@ -1,0 +1,13 @@
+.about-project__timeline-one {
+    max-width: 228px;
+    width: 100%;
+    background-color: #2BE080;
+    height: 36px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* text-align: center; */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

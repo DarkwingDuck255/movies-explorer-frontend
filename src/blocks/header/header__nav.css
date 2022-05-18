@@ -1,0 +1,10 @@
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* right: 70px; */
+    max-width: 183px;
+    margin-right: 70px;
+    flex-direction: row;
+    align-items: center;
+}

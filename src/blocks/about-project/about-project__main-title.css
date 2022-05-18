@@ -1,0 +1,11 @@
+.about-project__main-title {
+    max-width: 1140px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    margin: 0;
+    padding-bottom: 23px;
+    border-bottom: 1px solid;
+    align-self: center;
+}

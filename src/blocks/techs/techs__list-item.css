@@ -1,0 +1,12 @@
+.techs__list-item {
+    height: 60px;
+    max-width: 90px;
+    width: 100%;
+    background-color: #E8E8E8;
+    margin-right: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
