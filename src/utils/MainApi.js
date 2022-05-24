@@ -58,7 +58,7 @@ export function getUserFromSrv(token) {
       return errCheck(res)
     })
 }
-
+ 
 export function patchUser(token, user) {
   return fetch(`${baseUrl}/users/me`, {
     method: 'PATCH',

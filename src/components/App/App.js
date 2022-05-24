@@ -26,11 +26,13 @@ function App() {
     if (token) {
       MainApi.checkToken(token)
       .then((res) => {
+        setIsLoggedIn(true)
         if(res) {
           setIsLoggedIn(true)
+          console.log(currentUser, isLoggedIn)
         }
 
-      }) 
+      })
       .then(() => {
         console.log('статус логина', isLoggedIn)
         console.log('есть токен при загрузке страницы?', localStorage.getItem('token'))
@@ -53,7 +55,7 @@ function App() {
         console.log('текущий юзер?', currentUser)
       })
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]) 
  
   useEffect(() => {
     getAllMovies()
@@ -72,11 +74,11 @@ function App() {
   }
   
   function onLogin(data) {
+    // const token = localStorage.getItem('token');
     MainApi.login(data)
-    .then((res)=>{
+    .then((res) => {
       localStorage.setItem(res.token, "token")
       setIsLoggedIn(true)
-
       navigate('/profile')
     })
     .then(() =>{
@@ -86,6 +88,13 @@ function App() {
     .then(() => {
       console.log(isLoggedIn, 'залогинен после нажатия "Вход" ?')
     })
+    // .then(() => {
+    //   MainApi.getUserFromSrv(token)
+    //   .then((res)=> {
+    //     setCurrentUser(res.user)
+    //   })
+    // })
+
   }
 
   function onProfileEdit(user) {
@@ -94,12 +103,14 @@ function App() {
     MainApi.patchUser(token, user)
       .then((res) => {
         setCurrentUser(res)
-      })
+      }) 
   }
 
   function onSignOut() {
     localStorage.removeItem('token');
     console.log('Вышел?', isLoggedIn)
+
+    console.log(localStorage.getItem('token'))
   }
 
   return (

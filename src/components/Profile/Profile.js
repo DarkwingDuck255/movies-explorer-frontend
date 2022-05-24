@@ -3,7 +3,7 @@ import React from 'react';
 import HeaderLoggedin from '../Header/HeaderLoggedin';
 import { Link } from 'react-router-dom';
 import NavTab from '../NavTab/NavTab';
-import {useFormWithValidation} from "../../utils/formValidate";
+// import {useFormWithValidation} from "../../utils/formValidate";
 import { CurrentUserContext } from '../../utils/CurrentUserContext';
 
 export default function Profile(props) {
@@ -64,7 +64,7 @@ export default function Profile(props) {
                 ButtonClicked={openSidebar}
             />
             <section className='profile'>
-                <h2 className='profile__greeting'>{`Хеллоу, чмошник ${currentUser.name}`}</h2>
+                <h2 className='profile__greeting'>{`Хеллоу, ${currentUser.name}`}</h2>
                 <form className='profile__edit-form' onSubmit={handleSubmit}>
                     <div className='profile__edit-wrap'>
                         <label className='profile__edit-label'>
