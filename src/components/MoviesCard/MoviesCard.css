@@ -39,6 +39,11 @@
     flex-direction: column;
 }
 
+.movies-card__image {
+    max-width: 364px;
+    max-height: 203px;
+}
+
 .movies-card__card-button_inactive {
     background-image: url(../../images/save-inactive.svg);
     width: 30px;

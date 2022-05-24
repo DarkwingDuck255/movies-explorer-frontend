@@ -6,6 +6,15 @@
     margin: 70px auto 0 auto;
 }
 
+
+.err {
+    visibility: hidden;
+}
+
+.display__err {
+    visibility: visible;
+}
+
 .register__header {
     padding-bottom: 40px;
 }

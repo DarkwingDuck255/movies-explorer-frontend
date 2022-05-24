@@ -7,7 +7,7 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 import NavTab from '../NavTab/NavTab'
 
-function Movies() {
+function Movies({movies}) {
 
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -32,7 +32,9 @@ function Movies() {
                 // sidebarClosed={isSidebarOpen}
             />
             <SearchForm/>
-            <MoviesCardList/>
+            <MoviesCardList
+                movies={movies}
+            />
             <Preloader/>
             <Footer/>
         </section>

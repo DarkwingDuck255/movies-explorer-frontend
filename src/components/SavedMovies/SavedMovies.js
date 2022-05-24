@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer'
 import NavTab from '../NavTab/NavTab';
 
 
-function SavedMovies(props) {
+function SavedMovies({movies}) {
 
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -31,7 +31,9 @@ function SavedMovies(props) {
                 ButtonClicked={openSidebar}
             />
             <SearchForm/>
-            <MoviesCardList/>
+            <MoviesCardList
+                movies={movies}
+            />
             <Footer/>
         </section>
     )

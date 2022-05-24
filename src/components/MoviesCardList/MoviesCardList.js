@@ -1,23 +1,24 @@
 import './MoviesCardList.css'
 import React from "react";
 import MoviesCard from '../MoviesCard/MoviesCard';
-import initialCards from '../../utils/constants';
+// import initialCards from '../../utils/constants';
 // import '../../images/movies/1.svg'
 
 
-function MoviesCardList() {
+function MoviesCardList({movies}) {
     
 
     return (
         <>
         <div className='movies-card-list'>
-            {initialCards.map((cards) => {  
+            {movies.map((cards) => {  
               
                 return (
                     <MoviesCard
-                        name={cards.name}
+                        name={cards.nameRU}
                         duration={cards.duration}
-                        link={cards.link}
+                        link={`https://api.nomoreparties.co${cards.image.url}`}
+                        key={cards.id}
                     />
                 )
             })}
