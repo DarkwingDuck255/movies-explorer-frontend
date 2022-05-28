@@ -7,18 +7,18 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 import NavTab from '../NavTab/NavTab'
 
-function Movies({movies}) {
+function Movies({movies, isSidebarOpen, closeSidebar, openSidebarFunc}) {
 
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+    // const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
-    function openSidebar() {
-        setSidebarOpen(true)
-        console.log('click')
-    }
+    // function openSidebar() {
+    //     setSidebarOpen(true)
+    //     console.log('click')
+    // }
 
-    function closeSidebar() {
-        setSidebarOpen(false)
-    }
+    // function closeSidebar() {
+    //     setSidebarOpen(false)
+    // }
 
     return (
         
@@ -28,7 +28,7 @@ function Movies({movies}) {
                 closeSidePopup={closeSidebar}
             />
             <HeaderLoggedin
-                ButtonClicked={openSidebar}
+                buttonClicked={openSidebarFunc}
                 // sidebarClosed={isSidebarOpen}
             />
             <SearchForm/>

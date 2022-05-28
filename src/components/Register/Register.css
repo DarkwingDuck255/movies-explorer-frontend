@@ -80,6 +80,21 @@
     background-color: rgb(154, 195, 135);
 }
 
+.register__submit_inactive {
+    background-color: #a3a8be;
+    margin-top: 69px;
+    max-width: 396px;
+    height: 45px;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    cursor: none;
+    transition: 0.6s ease-in-out;
+}
+
 .register__singin-suggest {
     font-weight: 400;
     font-size: 14px;

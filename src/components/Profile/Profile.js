@@ -3,65 +3,45 @@ import React from 'react';
 import HeaderLoggedin from '../Header/HeaderLoggedin';
 import { Link } from 'react-router-dom';
 import NavTab from '../NavTab/NavTab';
-// import {useFormWithValidation} from "../../utils/formValidate";
 import { CurrentUserContext } from '../../utils/CurrentUserContext';
 
-export default function Profile(props) {
+
+export default function Profile({ openSidebarFunc, isSidebarOpen, closeSidebar, signOut, ...props }) {
     const currentUser = React.useContext(CurrentUserContext)
     const [userName, setUserName] = React.useState(currentUser.name);
     const [userEmail, setUserEmail] = React.useState(currentUser.email);
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
-    // const [error, setErr] = React.useState(false);
-    // const {values, handleChange, isValid, errors, resetForm} = useFormWithValidation();
+    const [isbuttonInactive, setButtonInactive] = React.useState(true);
 
-    
-// -----------------------------------------------------------------
-    // function submitForm(evt) {
-    //     evt.preventDefault()
-    //     if (values.user.name === currentUser.name || values.user.email === currentUser.email ) {
-    //         setErr()
-    //     }
-    //     else {
-    //         props.submitProfileEdit(values.name || currentUser.name, values.email || currentUser.email)
-    //         resetForm()
-    //     }
-    // }
+
+    // -----------------------------------------------------------------
+
 
     function handleChangeName(evt) {
         setUserName(evt.target.value);
+        setButtonInactive(false);
     }
 
     function handleChangeEmail(evt) {
         setUserEmail(evt.target.value)
-      }
+        setButtonInactive(false);
+    }
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        props.submitProfileEdit({name: userName, email: userEmail})
+        props.submitProfileEdit({ name: userName, email: userEmail })
+        window.location.reload(false);
     }
 
-    function openSidebar() {
-        setSidebarOpen(true)
-        console.log('click')
-    }
 
-    function closeSidebar() {
-        setSidebarOpen(false)
-    }
-
-    // function signOut(token) {
-    //     props.setIsLoggedIn(false)
-    //     localStorage.removeItem('token')
-    // }
 
     return (
         <>
-            <NavTab 
+            <NavTab
                 openSidebarBtnClicked={isSidebarOpen}
                 closeSidePopup={closeSidebar}
             />
             <HeaderLoggedin
-                ButtonClicked={openSidebar}
+                buttonClicked={openSidebarFunc}
             />
             <section className='profile'>
                 <h2 className='profile__greeting'>{`Хеллоу, ${currentUser.name}`}</h2>
@@ -70,19 +50,19 @@ export default function Profile(props) {
                         <label className='profile__edit-label'>
                             Имя
                         </label>
-                        <input className='profile__edit-input' required minLength="2" maxLength="30" type='text' name='name' autoComplete='off' placeholder={currentUser.name} onChange={handleChangeName}/>
+                        <input className='profile__edit-input' minLength="2" maxLength="30" type='text' name='name' autoComplete='off' placeholder={currentUser.name} onChange={handleChangeName} />
                     </div>
                     <div className='profile__edit-wrap'>
                         <label className='profile__edit-label'>
                             E-mail
                         </label>
-                        <input className='profile__edit-input' required name='email' type='email' autoComplete='off' placeholder={currentUser.email} onChange={handleChangeEmail}/>
+                        <input className='profile__edit-input' name='email' type='email' autoComplete='off' placeholder={currentUser.email} onChange={handleChangeEmail} />
                     </div>
-                    <button type='submit' className='profile__submit common__link'>
+                    <button type='submit' disabled={isbuttonInactive ? true : false} className={`${isbuttonInactive ? 'profile__submit_inactive' : 'profile__submit common__link'}`}>
                         Редактировать
                     </button>
                 </form>
-                <Link to='/sign-in' className='profile__signout common__link' onClick={props.signOut}>Выйти из аккаунта</Link>
+                <Link to='/sign-in' className='profile__signout common__link' onClick={signOut}>Выйти из аккаунта</Link>
             </section>
         </>
     )

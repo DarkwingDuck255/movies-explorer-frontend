@@ -1,9 +1,12 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ loggedIn, children, ...props }) => {
+const ProtectedRoute = ({ loggedIn, children}) => {
+  if (loggedIn !== true) {
+    return <Navigate to="/sign-in" />;
+  }
 
-  return (loggedIn ? children : <Navigate to="/movies" />)
+  return children;
   
 };
 

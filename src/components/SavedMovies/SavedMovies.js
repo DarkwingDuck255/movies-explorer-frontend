@@ -7,18 +7,18 @@ import Footer from '../Footer/Footer'
 import NavTab from '../NavTab/NavTab';
 
 
-function SavedMovies({movies}) {
+function SavedMovies({movies, openSidebarFunc, isSidebarOpen, closeSidebar }) {
 
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+    // const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
-    function openSidebar() {
-        setSidebarOpen(true)
-        console.log('click')
-    }
+    // function openSidebar() {
+    //     setSidebarOpen(true)
+    //     console.log('click')
+    // }
 
-    function closeSidebar() {
-        setSidebarOpen(false)
-    }
+    // function closeSidebar() {
+    //     setSidebarOpen(false)
+    // }
 // тут будут только добавленные в избранное
 
     return (
@@ -28,7 +28,7 @@ function SavedMovies({movies}) {
                 closeSidePopup={closeSidebar}
             />
             <HeaderLoggedin
-                ButtonClicked={openSidebar}
+                buttonClicked={openSidebarFunc}
             />
             <SearchForm/>
             <MoviesCardList

@@ -9,14 +9,14 @@ function errCheck(res) {
     return Promise.reject(`Ошибка API -> ${res.status}`)
 }
 
-export function register(name, email, password) {
+export function register({name, email, password}) {
     return fetch(`${baseUrl}/signup`, {
         method: 'POST',
         headers: {
-            'Accept': "application/json",
+            // 'Accept': "application/json",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(name, email, password)
+        body: JSON.stringify({name, email, password})
     })
     .then((res) => {
       return errCheck(res)
