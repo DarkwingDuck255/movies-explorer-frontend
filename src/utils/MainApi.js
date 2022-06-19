@@ -1,6 +1,6 @@
-// const baseUrl = 'http://api.darkwingduck-diplom.nomoredomains.work';
+const baseUrl = 'http://api.darkwingduck-diplom.nomoredomains.work';
 
-const baseUrl = 'http://localhost:3000'
+// const baseUrl = 'http://localhost:3000'
 
 function errCheck(res) {
   if (res.ok) {
