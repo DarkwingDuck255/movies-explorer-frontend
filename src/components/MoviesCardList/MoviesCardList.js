@@ -5,25 +5,39 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 // import '../../images/movies/1.svg'
 
 
-function MoviesCardList({movies}) {
-    
+function MoviesCardList({ movies, onSaveMovie, onDeleteSavedMovie, isSavedMovie, filteredMovs }) {
+
 
     return (
         <>
-        <div className='movies-card-list'>
-            {movies.map((cards) => {  
-              
-                return (
-                    <MoviesCard
-                        name={cards.nameRU}
-                        duration={cards.duration}
-                        link={`https://api.nomoreparties.co${cards.image.url}`}
-                        key={cards.id}
-                    />
-                )
-            })}
-            
-        </div>
+            <div className='movies-card-list' >
+                {filteredMovs.map((movies) => {
+                    function getTimeFromMins(mins) {
+                        let hours = Math.trunc(mins / 60);
+                        let minutes = mins % 60;
+                        return hours + 'ч ' + minutes + 'мин';
+                    };
+
+
+                    return (
+                        <>
+                            <MoviesCard
+                                name={movies.nameRU}
+                                duration={getTimeFromMins(movies.duration)}
+                                url={`https://api.nomoreparties.co${movies.image.url}`}
+                                key={movies.id}
+                                cards={movies}
+                                savingMovie={onSaveMovie}
+                                onDeleteSavedMovie={onDeleteSavedMovie}
+                                isSavedMovie={isSavedMovie}
+                                trailerLink={movies.trailerLink}
+                            />
+
+                        </>
+                    )
+                })}
+
+            </div>
         </>
     )
 

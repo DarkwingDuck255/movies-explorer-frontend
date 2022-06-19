@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import Movies from '../Movies/Movies'
+import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { useNavigate, Route, Routes } from "react-router-dom";
 import Main from '../Main/Main';
@@ -10,43 +10,44 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import getAllMovies from '../../utils/MoviesApi.js';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { CurrentUserContext } from '../../utils/CurrentUserContext'
-// import {register, login, checkToken} from '../../utils/MainApi.js';
+import { CurrentUserContext } from '../../utils/CurrentUserContext';
 import * as MainApi from '../../utils/MainApi.js';
-// import Header from '../Header/Header';
+import { useLocation } from "react-router-dom";
+
 
 
 function App() {
-  // const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
+  const [success, setSuccess] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [movies, setMovies] = useState([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isErrMsg, setIsErrMsg] = React.useState(false)
+  const [isErrMsg, setIsErrMsg] = React.useState(false);
+  const [isSavedMovie, setIsSavedMovie] = React.useState([]);
+  const [loginErr, setLoginErr] = React.useState(null);
+  const [searchValue, setSearchValue] = React.useState('');
+  const [noResult, setNoResult] = React.useState(false);
+  const [shortMovies, setShortMovies] = React.useState(true);
+  const [searchSavedValue, setSearchSavedValue] = React.useState('');
+  const [shortSavedMovies, setShortSavedMovies] = React.useState(true);
+  const { pathname } = useLocation();
+
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
       setTimeout(() => {
         MainApi.checkToken(token)
           .then((res) => {
-            // setIsLoggedIn(true)
             if (res) {
               setIsLoggedIn(true)
-              // console.log(currentUser, isLoggedIn, 'шляпа')
             }
             else {
               setIsLoggedIn(false)
               return
             }
           })
-
-          // .then(() => {
-          //   console.log('статус логина', isLoggedIn)
-          //   console.log('есть токен при загрузке страницы?', localStorage.getItem('token'))
-          // })
-
           .catch(err => {
             console.log(`нет токена, брат! ${err}`)
           })
@@ -64,16 +65,14 @@ function App() {
     const token = localStorage.getItem('token');
 
     if (token) {
-      setTimeout(() => {
-        MainApi.getUserFromSrv(token)
-          .then((res) => {
-            setCurrentUser(res.user)
-          })
-        // .then(()=> {
-        //   console.log('текущий юзер?', currentUser)
-        // })
-      }, 500)
+      // setTimeout(() => {
+      MainApi.getUserFromSrv(token)
+        .then((res) => {
+          setCurrentUser(res.user)
+        })
+      // }, 500)
     }
+
   }, [isLoggedIn])
 
   useEffect(() => {
@@ -81,11 +80,54 @@ function App() {
       .then((res) => {
         setMovies(res)
       })
+      .then(() => {
+        localStorage.setItem('movies', JSON.stringify(movies))
+      })
   }, [])
 
+  useEffect(() => {
+    if (localStorage.getItem('searchValue')) {
+      setSearchValue(localStorage.getItem('searchValue'))
+      // setShortMovies(JSON.parse(localStorage.getItem('checkbox')))
+    }
+  }, []);
 
-  function onRegister(name, email, password) {
-    MainApi.register(name, email, password)
+  useEffect(() => {
+    setShortMovies(JSON.parse(localStorage.getItem('checkbox')))
+  }, [])
+
+  useEffect(() => {
+    setShortSavedMovies(JSON.parse(localStorage.getItem('savedCheckbox')))
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('searchSavedValue')) {
+      setSearchSavedValue(localStorage.getItem('searchSavedValue'))
+    }
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setTimeout(() => {
+      MainApi.getSavedMovies(token)
+        .then((res) => {
+          setIsSavedMovie(res.filter((movies) => movies.owner === currentUser._id))
+          console.log(isSavedMovie)
+        })
+        .then((res) => {
+          localStorage.setItem('isSavedMovie', JSON.stringify(isSavedMovie))
+        })
+        .catch((err) => {
+          console.log('ошибка ', err)
+        })
+    }, 400)
+  }, [currentUser])
+
+  function onRegister({ name, email, password }) {
+    MainApi.register({ name: name, email: email, password: password })
+      .then(() => {
+        onLogin(email, password)
+      })
       .then(res => navigate('/movies'))
       .catch(err => {
         console.log('ошибка, брат', err)
@@ -93,40 +135,110 @@ function App() {
       })
   }
 
-  function onLogin(data) {
-    MainApi.login(data)
+  function onLogin(email, password) {
+    MainApi.login({ email: email, password: password })
       .then((res) => {
         setIsLoggedIn(true)
-        navigate('/profile')
+        navigate('/movies')
         // console.log(res)
       })
       .catch(err => {
         console.log('ошибка, брат', err)
+        setLoginErr(true);
       })
   }
 
   function onProfileEdit(user) {
     const token = localStorage.getItem('token');
-    // console.log(token)
     MainApi.patchUser(token, user)
       .then((res) => {
         setCurrentUser(res)
+        setSuccess(true)
+      })
+      .catch(err => {
+        console.log('ошибка редактирования профиля', err)
+        setSuccess(false)
       })
   }
 
   function onSignOut() {
-    localStorage.removeItem('token');
+    localStorage.clear()
     setIsLoggedIn(false)
+    navigate('/')
     console.log('Вышел?', isLoggedIn)
 
     console.log(localStorage.getItem('token'))
   }
 
+  function onSaveMovie(movie) {
+    const token = localStorage.getItem('token')
+
+    MainApi.saveMovie(movie, token)
+      .then((res) => {
+        setIsSavedMovie([...isSavedMovie, res])
+      })
+  }
+
+  function onDeleteSavedMovie(movies) {
+    const token = localStorage.getItem('token')
+    const savedMovie = isSavedMovie.find(
+      (mov) => mov.movieId === movies.id
+    )
+    console.log(savedMovie)
+
+    MainApi.deleteSavedMovie(savedMovie, token)
+      .then(() => {
+        const newMovies = isSavedMovie.filter((mov) =>
+          mov._id !== savedMovie._id)
+        console.log(newMovies)
+        setIsSavedMovie(newMovies)
+      })
+      .catch(err => {
+        console.log('ошибка удаления', err)
+      })
+  }
+
+  function onDeleteFromSavedMoviesPage(movies) {
+    const token = localStorage.getItem('token')
+    const savedMovie = isSavedMovie.find(
+      (mov) => mov.movieId === movies.movieId
+    )
+    console.log(savedMovie)
+
+    MainApi.deleteSavedMovie(savedMovie, token)
+      .then(() => {
+        const newMovies = isSavedMovie.filter((mov) =>
+          mov._id !== savedMovie._id)
+        console.log(newMovies)
+        setIsSavedMovie(newMovies)
+      })
+      .catch(err => {
+        console.log('ошибка удаления', err)
+      })
+  }
+
+  const filteredMovs = movies.filter((movies) => {
+    if (shortMovies === true) {
+      return movies.nameRU.toLocaleLowerCase().includes(searchValue)
+    }
+    else {
+      return movies.nameRU.toLocaleLowerCase().includes(searchValue) && movies.duration < 40
+    }
+  })
+
+  const filteredSavedMovs = isSavedMovie.filter((movies) => {
+    if (shortSavedMovies === true) {
+      return movies.nameRU.toLocaleLowerCase().includes(searchSavedValue)
+    }
+    else {
+      return movies.nameRU.toLocaleLowerCase().includes(searchSavedValue) && movies.duration < 40
+    }
+  })
+
+
   if (isLoggedIn === null) {
     return <h2>Загрузка...</h2>;
   }
-
-
 
   function openSidebar() {
     setSidebarOpen(true)
@@ -140,7 +252,6 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='App'>
-        {/* <Header isLoggedIn={isLoggedIn}/> */}
         <Routes>
 
           <Route path='/' element={
@@ -153,21 +264,50 @@ function App() {
           } />
 
           <Route path='/movies' element={
-            <Movies
-              movies={movies}
-              openSidebarFunc={openSidebar}
-              isSidebarOpen={isSidebarOpen}
-              closeSidebar={closeSidebar}
-            />
+            <ProtectedRoute loggedIn={isLoggedIn}>
+              <Movies
+                movies={movies}
+                openSidebarFunc={openSidebar}
+                isSidebarOpen={isSidebarOpen}
+                closeSidebar={closeSidebar}
+                onSaveMovie={onSaveMovie}
+                onDeleteSavedMovie={onDeleteSavedMovie}
+                isSavedMovie={isSavedMovie}
+                filteredMovs={filteredMovs}
+                noResult={noResult}
+                setNoResult={setNoResult}
+                shortMovies={shortMovies}
+                setShortMovies={setShortMovies}
+                setSearchValue={setSearchValue}
+                searchValue={searchValue}
+                setSearchSavedValue={setSearchSavedValue}
+                searchSavedValue={searchSavedValue}
+              />
+            </ProtectedRoute>
           } />
 
           <Route path='/saved-movies' element={
-            <SavedMovies
-              movies={movies}
-              openSidebarFunc={openSidebar}
-              isSidebarOpen={isSidebarOpen}
-              closeSidebar={closeSidebar}
-            />
+            <ProtectedRoute loggedIn={isLoggedIn}>
+              <SavedMovies
+                movies={movies}
+                openSidebarFunc={openSidebar}
+                isSidebarOpen={isSidebarOpen}
+                closeSidebar={closeSidebar}
+                isSavedMovie={isSavedMovie}
+                filteredSavedMovs={filteredSavedMovs}
+                onDeleteSavedMovie={onDeleteFromSavedMoviesPage}
+                noResult={noResult}
+                setNoResult={setNoResult}
+                shortMovies={shortMovies}
+                setShortMovies={setShortMovies}
+                setSearchValue={setSearchValue}
+                searchValue={searchValue}
+                setSearchSavedValue={setSearchSavedValue}
+                searchSavedValue={searchSavedValue}
+                setShortSavedMovies={setShortSavedMovies}
+                shortSavedMovies={shortSavedMovies}
+              />
+            </ProtectedRoute>
           } />
 
           <Route
@@ -180,22 +320,29 @@ function App() {
                   openSidebarFunc={openSidebar}
                   isSidebarOpen={isSidebarOpen}
                   closeSidebar={closeSidebar}
+                  success={success}
+                  setSuccess={setSuccess}
                 />
               </ProtectedRoute>
             }
           />
 
           <Route path='/sign-up' element={
-            <Register
-              submitReg={onRegister}
-              isErrMsg={isErrMsg}
-            />
+            <ProtectedRoute loggedIn={!isLoggedIn}>
+              <Register
+                submitReg={onRegister}
+                isErrMsg={isErrMsg}
+              />
+            </ProtectedRoute>
           } />
 
           <Route path='/sign-in' element={
-            <Login
-              submitLogin={onLogin}
-            />
+            <ProtectedRoute loggedIn={!isLoggedIn}>
+              <Login
+                submitLogin={onLogin}
+                loginErr={loginErr}
+              />
+            </ProtectedRoute>
           } />
 
           <Route path='*' element={

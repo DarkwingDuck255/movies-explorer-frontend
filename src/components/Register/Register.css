@@ -13,6 +13,7 @@
 
 .display__err {
     visibility: visible;
+    color: red;
 }
 
 .register__header {

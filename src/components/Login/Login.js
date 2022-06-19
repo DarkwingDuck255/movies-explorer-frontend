@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import logo from "../../images/logo.svg";
 import { useFormValidation } from "../../utils/formValidate";
 
-export default function Login(props) {
+const emailPattern = '[a-z0-9]+@[a-z]+\.[a-z]{2,3}'
+
+export default function Login({ loginErr, ...props }) {
 
     const { values, handleChange, isValid, resetForm } = useFormValidation();
 
@@ -30,11 +32,13 @@ export default function Login(props) {
                     <label className='register__input-label'>
                         E-mail
                     </label>
-                    <input className='register__input' type='email' name='email' required onChange={handleChange} autoComplete='false'/>
+                    <input className='register__input' type='email' pattern={emailPattern} name='email' required onChange={handleChange} autoComplete='false' />
                     <label className='register__input-label'>
                         Пароль
                     </label>
                     <input className='register__input' type='password' required name='password' minLength='8' onChange={handleChange} />
+
+                    <p className={`${loginErr === true ? 'display__err' : 'err'}`}>Неверный логин или пароль</p>
 
                     <button className={`${isValid ? 'register__submit' : 'register__submit_inactive'} login__button`} type='submit' disabled={!isValid}>
                         Войти

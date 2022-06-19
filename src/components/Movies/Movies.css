@@ -10,6 +10,15 @@
     
 }
 
+.movies__noresult {
+    margin-top: 100px;
+    text-align: center;
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 @media screen and (max-width:768px) {
     .movies {
         max-width: 768px;

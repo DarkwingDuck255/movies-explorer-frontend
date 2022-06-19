@@ -6,12 +6,12 @@ import NavTab from '../NavTab/NavTab';
 import { CurrentUserContext } from '../../utils/CurrentUserContext';
 
 
-export default function Profile({ openSidebarFunc, isSidebarOpen, closeSidebar, signOut, ...props }) {
+export default function Profile({ openSidebarFunc, isSidebarOpen, closeSidebar, signOut, success, setSuccess, ...props }) {
     const currentUser = React.useContext(CurrentUserContext)
     const [userName, setUserName] = React.useState(currentUser.name);
     const [userEmail, setUserEmail] = React.useState(currentUser.email);
     const [isbuttonInactive, setButtonInactive] = React.useState(true);
-
+    // const [fetchRes, setFetchRes] = React.useState
 
     // -----------------------------------------------------------------
 
@@ -28,8 +28,17 @@ export default function Profile({ openSidebarFunc, isSidebarOpen, closeSidebar, 
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        props.submitProfileEdit({ name: userName, email: userEmail })
-        window.location.reload(false);
+        if (currentUser.name !== userName || currentUser.email !== userEmail) {
+            props.submitProfileEdit({ name: userName, email: userEmail })
+        }
+        else {
+            setSuccess(false)
+        }
+        
+        // if (success === true) {
+
+        // }
+        // window.location.reload(false);
     }
 
 
@@ -50,14 +59,18 @@ export default function Profile({ openSidebarFunc, isSidebarOpen, closeSidebar, 
                         <label className='profile__edit-label'>
                             Имя
                         </label>
-                        <input className='profile__edit-input' minLength="2" maxLength="30" type='text' name='name' autoComplete='off' placeholder={currentUser.name} onChange={handleChangeName} />
+                        <input className='profile__edit-input' minLength="2" maxLength="30" type='text' name='name' autoComplete='off' placeholder='Ваше имя' value={userName} onChange={handleChangeName} />
                     </div>
                     <div className='profile__edit-wrap'>
                         <label className='profile__edit-label'>
                             E-mail
                         </label>
-                        <input className='profile__edit-input' name='email' type='email' autoComplete='off' placeholder={currentUser.email} onChange={handleChangeEmail} />
+                        <input className='profile__edit-input' name='email' type='email' autoComplete='off' placeholder='Ваш email' value={userEmail} onChange={handleChangeEmail} />
+
                     </div>
+                    {success === true ? <span className='profile__success'>Запрос успешен.</span> : ''}
+                    {success === false ? <span className='profile__unsuccessful'>Что-то пошло не так...</span> : ''}
+                    {/* <span>{success === true ? `Запрос успешен.` : `Что-то пошло не так...`}</span> */}
                     <button type='submit' disabled={isbuttonInactive ? true : false} className={`${isbuttonInactive ? 'profile__submit_inactive' : 'profile__submit common__link'}`}>
                         Редактировать
                     </button>
