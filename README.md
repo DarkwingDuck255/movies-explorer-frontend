@@ -1,3 +1,8 @@
+ссылка на фронт http://darkwingduck-diplom.nomoredomains.work/movies
+ссылка на бэк http://api.darkwingduck-diplom.nomoredomains.work
+ip адрес сервера 51.250.111.195
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

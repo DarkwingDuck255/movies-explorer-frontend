@@ -1,15 +1,19 @@
 import './MoviesCard.css'
 import React from "react";
-// import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
+function MoviesCard({ savingMovie, cards, onDeleteSavedMovie, isSavedMovie, trailerLink, ...props }) {
 
-
-
-function MoviesCard(props) {
-    const [ active, setActive ] = React.useState(false);
+    const { pathname } = useLocation();
 
     function addToFavourites() {
-        setActive(true)
+        console.log('xxx')
+        savingMovie(cards)
+    }
+
+    function deleteFromSaved() {
+        console.log('zzz')
+        onDeleteSavedMovie(cards)
     }
 
     return (
@@ -19,9 +23,15 @@ function MoviesCard(props) {
                     <h4 className='movies-card__title'>{props.name}</h4>
                     <p className='movies-card__duration'>{props.duration}</p>
                 </div>
-                <button className={`${active ? `movies-card__card-button_active` : `movies-card__card-button_inactive`}`} onClick={addToFavourites}/>
+                <button className={`${isSavedMovie.some((movie) =>
+                    movie.movieId === cards.id
+                ) && cards.id ? `movies-card__card-button_active` : `movies-card__card-button_inactive`}`} onClick={isSavedMovie.some((movie) =>
+                    movie.movieId === cards.id
+                ) && cards.id ? deleteFromSaved : addToFavourites} />
             </div>
-            <img className='movies-card__image' src={props.link} alt={props.name}/>
+            <a href={trailerLink} target='_blank'>
+                <img className='movies-card__image' src={props.url} alt={props.name} />
+            </a>
         </div>
     )
 }

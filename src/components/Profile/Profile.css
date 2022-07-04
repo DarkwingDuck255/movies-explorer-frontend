@@ -42,6 +42,29 @@
     border-bottom: none;
 }
 
+.profile__success {
+    /* padding-bottom: 120px; */
+    font-size: 16px;
+    color: green;
+    font-weight: 400;
+    display: flex;
+    position: relative;
+    top: -100px;
+    justify-content: center;
+
+}
+.profile__unsuccessful {
+    /* padding-bottom: 120px; */
+    font-size: 16px;
+    color: red;
+    font-weight: 400;
+    display: flex;
+    position: relative;
+    top: -100px;
+    justify-content: center;
+    
+}
+
 .profile__edit-label {
     font-weight: 500;
     font-size: 11px;
@@ -68,6 +91,17 @@
     line-height: 16px;
 }
 
+.profile__submit_inactive {
+    background:transparent;
+    border: none;
+    outline: none;
+    display: flex;
+    margin: 0 auto;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+}
+
 .profile__signout {
     color: #FF3055;
     font-weight: 500;
@@ -76,6 +110,7 @@
     padding-top: 16px;
     padding-bottom: 70px;
 }
+
 
 @media screen and (max-width:450px) {
     .profile__edit-form {
